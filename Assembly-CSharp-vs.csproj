@@ -47,10 +47,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\demo0\GameLogic.cs" />
-     <Compile Include="Assets\demo0\PlayerControl.cs" />
-     <Compile Include="Assets\demo1\Client.cs" />
-     <Compile Include="Assets\demo1\Server.cs" />
-     <Compile Include="Assets\demo2\PlayerControl.cs" />
+     <Compile Include="Assets\demo2\Client.cs" />
+     <Compile Include="Assets\demo2\PlayerControl2.cs" />
+     <Compile Include="Assets\demo2\Server.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

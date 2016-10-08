@@ -1,15 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\demo0\PlayerControl.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\demo2\Client.cs">
     <Files>
-      <File FileName="..\Unity3D-Protobuf-Socket-master\Assets\TestScripts\Reading.cs" Line="1" Column="1" />
-      <File FileName="..\Unity3D-Protobuf-Socket-master\Assets\TestScripts\LogCallBack.cs" Line="1" Column="1" />
-      <File FileName="..\Unity3D-Protobuf-Socket-master\Assets\TestScripts\SimulateServer.cs" Line="1" Column="1" />
-      <File FileName="..\Unity3D-Protobuf-Socket-master\Assets\Scripts\Test.cs" Line="1" Column="1" />
-      <File FileName="..\Unity3D-Protobuf-Socket-master\Assets\Scripts\SocketCallBack.cs" Line="1" Column="1" />
-      <File FileName="..\Unity3D-Protobuf-Socket-master\Assets\Scripts\DemoCMDProcess.cs" Line="1" Column="1" />
-      <File FileName="..\Unity3D-Protobuf-Socket-master\Assets\Scripts\Demo.cs" Line="1" Column="1" />
-      <File FileName="Assets\demo0\PlayerControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\demo2\Client.cs" Line="54" Column="1" />
+      <File FileName="Assets\demo2\Server.cs" Line="52" Column="3" />
+      <File FileName="Assets\demo0\GameLogic.cs" Line="15" Column="36" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
