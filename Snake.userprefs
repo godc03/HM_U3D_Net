@@ -1,10 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\demo2\Client.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\demo2\PlayerControl2.cs">
     <Files>
-      <File FileName="Assets\demo2\Client.cs" Line="54" Column="1" />
-      <File FileName="Assets\demo2\Server.cs" Line="52" Column="3" />
-      <File FileName="Assets\demo0\GameLogic.cs" Line="15" Column="36" />
+      <File FileName="Assets\demo2\Server.cs" Line="42" Column="33" />
+      <File FileName="Assets\demo2\Client.cs" Line="12" Column="31" />
+      <File FileName="Assets\demo0\GameLogic.cs" Line="9" Column="35" />
+      <File FileName="Assets\demo2\PlayerControl2.cs" Line="106" Column="4" />
+      <File FileName="Assets\demo2\ServerPlaceholder.cs" Line="27" Column="55" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

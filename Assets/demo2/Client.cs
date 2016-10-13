@@ -9,7 +9,7 @@ public class Client : MonoBehaviour {
 	int Port = 2016;
 
 	bool testFlag = false;
-	GameObject[] PlayerList;
+	public GameObject SelfPlayer;
 	// Use this for initialization
 	void Start () {
 	
@@ -41,9 +41,9 @@ public class Client : MonoBehaviour {
 
 	void OnConnectedToServer()
 	{
-		GameObject player = (GameObject)Network.Instantiate(playerPrefabs,Vector3.zero,Quaternion.identity,0);
-		PlayerControl2 playerScript =  player.GetComponent<PlayerControl2>();
-		Debug.Log("playerScritp = "+playerScript);
+		SelfPlayer = (GameObject)Network.Instantiate(playerPrefabs,Vector3.zero,Quaternion.identity,0);
+		//PlayerControl2 playerScript =  player.GetComponent<PlayerControl2>();
+		//Debug.Log("playerScritp = "+playerScript);
 	}
 
 

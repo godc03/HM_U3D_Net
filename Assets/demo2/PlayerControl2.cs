@@ -24,27 +24,18 @@ public class PlayerControl2 : MonoBehaviour {
 	private float beginX = 0.0f, beginY = 0.0f;
 	private float PassTime = 0.0f;
 
-
 	private GameLogic game;
 	// Use this for initialization
 	void Start () {
-		game = GameLogic.getInstance;
+		game = GameObject.Find ("bg").GetComponent<GameLogic> ();
 		Debug.Log ("game = " + game);
-		//random set
-
-		//init map 
-		
-		if (this.MapID == 0) {
-			beginX = game.Map1BeginX;
-			beginY = game.Map1BeginY;
-		} else {
-			beginX = game.Map2BeginX;
-			beginY = game.Map2BeginY;
-		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (!GetComponent<NetworkView>().isMine) {		//!isLocalPlayer
+			return;
+		}
 		//Input
 		if (Input.GetKeyDown (KeyCode.W)) {
 			CurDirect = Direct.Up;
@@ -89,5 +80,37 @@ public class PlayerControl2 : MonoBehaviour {
 	{
 		this.PosX = x;
 		this.PosY = y;
+	}
+
+	public void OnSetMap(int id)
+	{
+		GetComponent<NetworkView> ().RPC ("SetMap",RPCMode.All,id);
+	}
+
+	public void OnStartGame()
+	{
+		GetComponent<NetworkView> ().RPC ("StartGame",RPCMode.All);
+	}
+
+	[RPC]
+	public void SetMap(int id)
+	{
+		this.MapID = id;
+		//init map 
+		if (this.MapID == 0) {
+			this.beginX = game.Map1BeginX;
+			this.beginY = game.Map1BeginY;
+		} else {
+			this.beginX = game.Map2BeginX;
+			this.beginY = game.Map2BeginY;
+		}
+	}
+
+	[RPC]
+	public void StartGame()
+	{
+		//TODO random set
+		this.PosX = 4;
+		this.PosY = 9;
 	}
 }
