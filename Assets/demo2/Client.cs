@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
 using System.Collections;
+//socket
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
+using System.Text;
 
 public class Client : MonoBehaviour {
 	
@@ -11,42 +15,45 @@ public class Client : MonoBehaviour {
 	public GameObject SelfPlayer;
     private bool bStart = false;
 
-    NetworkClient client = new NetworkClient(); //ClientScene.ConnectLocalServer(); for local
-
-    public class MyMsgType
-    {
-        public static short Move = MsgType.Highest + 1;
-    };
-    public class MoveMessage : MessageBase
-    {
-        public int row;
-        public int col;
-    }
+    Socket socket;
+    IPEndPoint ipEnd;
+    Thread netThread;
+    byte[] recvBuf = new byte[1024];
+    byte[] sendBuf = new byte[1024];
 
     private void ClientSetup()
     {
-        client.RegisterHandler(MsgType.Connect, OnConnected);
-        client.RegisterHandler(MyMsgType.Move, OnPlayerMove);   // NetworkServer.RegisterHandler on server
-        client.Connect(IP, Port);
-        Debug.Log("Connect。。。。。");
-    }
 
-    private void ServerSetup()
-    {
-        NetworkServer.Listen(20168);
+        IPAddress ip = IPAddress.Parse(IP);
+        ipEnd = new IPEndPoint(ip, Port);
+
+        if (socket != null)
+            socket.Close();
+
+        socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        socket.Connect(ipEnd);
+        netThread = new Thread(new ThreadStart(SocketReceive));
+        netThread.Start();
+        Debug.Log("Connect。。。。。");
         bStart = true;
     }
 
-    private void OnConnected(NetworkMessage msg)
+    void SocketReceive()
     {
-        Debug.Log("Client connect to server！");
+        while(true)
+        {
+            int recvLen = socket.Receive(recvBuf);
+            string recvStr = Encoding.ASCII.GetString(recvBuf, 0, recvLen);
+            Debug.Log("Receive message:" + recvStr);
+        }
     }
 
-    private void OnPlayerMove(NetworkMessage msg)
+    public void SocketSend(string sendStr)
     {
-        MoveMessage MoveMsg = msg.ReadMessage<MoveMessage>();
-        Debug.Log("Player move to " + MoveMsg.row + ":" + MoveMsg.col);
+        sendBuf = Encoding.ASCII.GetBytes(sendStr);
+        socket.Send(sendBuf, sendBuf.Length, SocketFlags.None);
     }
+ 
 
 	// Use this for initialization
 	void Start () {
@@ -56,43 +63,31 @@ public class Client : MonoBehaviour {
 	void OnGUI(){
         if (!bStart)
         {
-			StartConnect();
+            if(GUILayout.Button("Login"))
+            {
+                ClientSetup();
+                SocketSend("hello world");
+            }
         }
         else
         {
-			InGame();
+            if (GUILayout.Button("Quit"))
+            {
+                if (netThread != null)
+                {
+                    netThread.Interrupt();
+                    netThread.Abort();
+                    if (socket != null)
+                    {
+                        socket.Close();
+                    }
+                }
+                bStart = false;
+                Debug.Log("disconnect !");
+            }
         }
 		
     }
-
-	void StartConnect()
-	{
-		if (GUILayout.Button ("Server")) {
-            ServerSetup();
-		}
-        else if(GUILayout.Button("Connect"))
-        {
-            ClientSetup();
-        }
-	}
-	
-	void InGame(){
-        if(NetworkServer.active)
-        {
-            if (GUILayout.Button ("Test Move"))
-            {
-                MoveMessage msg = new MoveMessage();
-                msg.row = 3;
-                msg.col = 5;
-
-                NetworkServer.SendToAll(MyMsgType.Move, msg);
-            }
-        }
-		else if (GUILayout.Button ("Quit"))
-        {
-
-		}
-	}
 
 	// Update is called once per frame
 	void Update () {
